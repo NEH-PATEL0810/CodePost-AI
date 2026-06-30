@@ -1,9 +1,11 @@
 import { defineManifest } from "@crxjs/vite-plugin";
 
+const isDev = process.env.NODE_ENV !== "production";
+
 export default defineManifest({
   manifest_version: 3,
   name: "CodePost AI",
-  description: "Generate professional leetcode Solution explainations using AI",
+  description: "Generate professional LeetCode solution explanations using AI",
   version: "0.1.0",
   icons: {
     "16": "src/assets/icons/icon16.png",
@@ -31,6 +33,9 @@ export default defineManifest({
       js: ["src/content/content.ts"],
     },
   ],
-  permissions: ["storage", "activeTab", "tabs","scripting"],
-  host_permissions: ["https://leetcode.com/*","https://localhost:8000/*"],
+  permissions: ["storage", "activeTab", "tabs", "scripting"],
+  host_permissions: [
+    "https://leetcode.com/*",
+    ...(isDev ? ["http://localhost:8000/*"] : []),
+  ],
 });

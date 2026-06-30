@@ -3,57 +3,37 @@
  *
  * Injected into web pages matching the patterns defined in manifest.ts.
  * Has access to the page DOM but runs in an isolated world.
- * Communicates with the background service worker via chrome.runtime messaging.
+ * Communicates with the background service worker and popup via chrome.runtime.
+ *
+ * Responsibilities:
+ *  - Listen for EXTRACT_PROBLEM messages and respond with extracted data.
+ *  - Page status (isProblem / isContest / isDiscuss) is computed directly
+ *    in the popup from the tab URL — no message needed for that.
  */
 
-// ⚠️ Must be first — installs a guard against "Extension context invalidated"
-// errors thrown by the @crxjs/vite-plugin HMR client during development.
+// ⚠️ Must be first — guards against "Extension context invalidated" errors
+// thrown by the @crxjs/vite-plugin HMR client when the extension reloads.
 import { installExtensionContextGuard } from "@/utils/extensionContext";
 installExtensionContextGuard();
 
-import {
-  isContestPage,
-  isDiscussPage,
-  isProblemPage,
-} from "@/utils/leetcode.ts";
+import { extractProblem } from "./extractor";
+import { MessageType } from "@/types/messages";
+import { debugLog } from "./debug";
+import { LOGS } from "@/constants/messages";
 
-console.log("[CodePost AI] Content script loaded.");
+debugLog(LOGS.CONTENT_LOADED);
 
+chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
+    switch (message.type) {
+        case MessageType.EXTRACT_PROBLEM: {
+            debugLog(LOGS.EXTRACTION_STARTED);
+            const problem = extractProblem();
+            debugLog(LOGS.EXTRACTION_COMPLETED, problem);
+            sendResponse({ problem });
+            break;
+        }
+    }
 
-function getPageStatus(){
-  const url = window.location.href;
-
-  return{
-    isProblem: isProblemPage(url),
-    isContest: isContestPage(url),
-    isDiscuss: isDiscussPage(url),
-    url,
-  };
-}
-
-chrome.runtime.onMessage.addListener((message,_,sendResponse) => {
-  if(message.type === "CHECK_PAGE"){
-    sendResponse(getPageStatus());
-  }
-  return true;
+    // Return true to keep the message channel open for async responses.
+    return true;
 });
-// Listen for messages from the background service worker or popup
-// chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-//   switch (message.type) {
-//     case "GET_PAGE_INFO":
-//       sendResponse({
-//         url: window.location.href,
-//         title: document.title,
-//       });
-//       break;
-
-//     default:
-//       sendResponse({ status: "unknown_message_type" });
-//   }
-
-//   return true;
-// });
-
-// export {};
-
-

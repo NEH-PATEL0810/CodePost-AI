@@ -4,7 +4,13 @@
  * Runs as a persistent service worker in the extension context.
  * Handles events, manages state, and coordinates between
  * content scripts and the popup.
+ *
+ * Responsibilities:
+ *  - Respond to lifecycle events (install, update).
+ *  - Route messages between popup and content scripts as needed.
  */
+
+import { MessageType } from "@/types/messages";
 
 // Listen for extension installation or update
 chrome.runtime.onInstalled.addListener((details) => {
@@ -22,7 +28,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log("[CodePost AI] Message received:", message, "from:", sender);
 
   switch (message.type) {
-    case "PING":
+    case MessageType.PING:
       sendResponse({ status: "ok", source: "background" });
       break;
 
@@ -30,8 +36,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       sendResponse({ status: "unknown_message_type" });
   }
 
-  // Return true to indicate async response handling
+  // Return true to keep the channel open for async responses.
   return true;
 });
-
-export {};

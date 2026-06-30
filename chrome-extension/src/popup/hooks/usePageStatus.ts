@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { getCurrentTab } from "@/services/chrome.services.ts";
+import { getCurrentTab } from "@/services/chrome.services";
 import {
   isContestPage,
   isDiscussPage,
   isProblemPage,
-} from "@/utils/leetcode.ts";
-import type { PageStatusResponse } from "@/types/messages.ts";
+} from "@/utils/leetcode";
+import type { PageStatusResponse } from "@/types/messages";
 
 type PageStatusState =
   | { loading: true; status: null }

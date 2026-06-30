@@ -1,0 +1,19 @@
+export const ExtractionError = {
+
+    TITLE_NOT_FOUND: "TITLE_NOT_FOUND",
+
+    DESCRIPTION_NOT_FOUND: "DESCRIPTION_NOT_FOUND",
+
+    EXAMPLES_NOT_FOUND: "EXAMPLES_NOT_FOUND",
+
+    CONSTRAINTS_NOT_FOUND: "CONSTRAINTS_NOT_FOUND",
+
+    LANGUAGE_NOT_FOUND: "LANGUAGE_NOT_FOUND",
+
+    CODE_NOT_FOUND: "CODE_NOT_FOUND",
+
+    DIFFICULTY_NOT_FOUND: "DIFFICULTY_NOT_FOUND",
+
+} as const;
+
+export type ExtractionError = (typeof ExtractionError)[keyof typeof ExtractionError];

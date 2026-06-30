@@ -1,4 +1,4 @@
-import type {ProblemData} from "./problem.ts";
+import type { ProblemData } from "./problem";
 
 export interface GenerateRequest{
     problem: ProblemData;

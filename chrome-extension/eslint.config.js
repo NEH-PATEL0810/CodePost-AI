@@ -16,7 +16,13 @@ export default defineConfig([
       reactRefresh.configs.vite,
     ],
     languageOptions: {
-      globals: globals.browser,
+      globals: {
+        // Standard browser globals (window, document, fetch, etc.)
+        ...globals.browser,
+        // Chrome Extension APIs (chrome.runtime, chrome.tabs, etc.)
+        // Not included in globals.browser — must be added explicitly.
+        ...globals.webextensions,
+      },
     },
   },
 ])
