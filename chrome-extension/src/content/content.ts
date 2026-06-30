@@ -6,6 +6,11 @@
  * Communicates with the background service worker via chrome.runtime messaging.
  */
 
+// ⚠️ Must be first — installs a guard against "Extension context invalidated"
+// errors thrown by the @crxjs/vite-plugin HMR client during development.
+import { installExtensionContextGuard } from "@/utils/extensionContext";
+installExtensionContextGuard();
+
 import {
   isContestPage,
   isDiscussPage,
