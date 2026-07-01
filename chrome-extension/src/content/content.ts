@@ -22,6 +22,8 @@ import { debugLog } from "./debug";
 import { LOGS } from "@/constants/messages";
 
 debugLog(LOGS.CONTENT_LOADED);
+// const problem = extractProblem();
+// console.log(problem);
 
 chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
     switch (message.type) {

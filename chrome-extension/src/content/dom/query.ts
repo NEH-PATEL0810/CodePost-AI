@@ -32,3 +32,9 @@ export function queryAll(selectors:SelectorList) : Element[]{
 
     return result;
 }
+
+
+export function queryText(selectors:SelectorList,error:ExtractionError):string{
+    const element = queryRequired(selectors,error);
+    return(element.textContent ?? "").trim();
+}

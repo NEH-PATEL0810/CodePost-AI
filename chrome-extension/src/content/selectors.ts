@@ -7,10 +7,19 @@
  */
 import type { SelectorList} from "./dom/types";
 
-export const SELECTORA: Record<string,SelectorList> = {
-    TITLE:[],
+export const SELECTORS: Record<string,SelectorList> = {
+    TITLE:[
+        "div.text-title-large",
+        "[data-cy='question-title']",
+        "h1",
+    ],
     DESCRIPTION:[],
-    DIFFICULTY:[],
+    DIFFICULTY:[
+        "div.text-difficulty-easy",
+        "div.text-difficulty-medium",
+        "div.text-difficulty-hard",
+        "[diff]",
+    ],
     EXAMPLES:[],
     CONSTRAINTS:[],
     LANGUAGE:[],

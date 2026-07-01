@@ -15,9 +15,13 @@ import { extractExample } from "./extractors/examples";
 import { extractConstraints } from "./extractors/constraints";
 import { extractLanguage } from "./extractors/language";
 import { extractCode } from "./extractors/code";
-
+import { debugLog } from "./debug";
 
 export function extractProblem(): ProblemData {
+    debugLog(
+        "Extracting Problem",
+        window.location.href
+    );
     return {
         title: extractTitle(),
         difficulty: extractDifficulty(),
