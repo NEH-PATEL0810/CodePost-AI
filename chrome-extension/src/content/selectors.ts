@@ -13,15 +13,22 @@ export const SELECTORS: Record<string,SelectorList> = {
         "[data-cy='question-title']",
         "h1",
     ],
-    DESCRIPTION:[],
+    DESCRIPTION:[
+        "div[data-track-load='description_content']",
+        ".elfjS",
+    ],
     DIFFICULTY:[
         "div.text-difficulty-easy",
         "div.text-difficulty-medium",
         "div.text-difficulty-hard",
         "[diff]",
     ],
-    EXAMPLES:[],
-    CONSTRAINTS:[],
+    EXAMPLES:[
+        "pre",
+    ],
+    CONSTRAINTS:[
+        "ul.mt-4",
+    ],
     LANGUAGE:[],
     CODE_EDITOR:[]
 };

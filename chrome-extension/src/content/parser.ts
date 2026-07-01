@@ -5,6 +5,8 @@
  * inline — keeps extraction code clean and consistent.
  */
 
+// import { text } from "stream/consumers";
+
 /**
  * Removes unnecessary whitespace and trims a string.
  */
@@ -12,10 +14,15 @@ export function cleanText(text: string): string {
     return text.replace(/\s+/g, " ").trim();
 }
 
-/**
- * Converts an array of DOM Elements into a clean string array
- * by extracting and normalising each element's textContent.
- */
+export function cleanPreserveLines(text: string):string{
+    return text
+    .replace(/\r/g, "")
+    .replace(/\t/g, " ")
+    .replace(/[ ]{2,}/g, " ")
+    .trim();
+
+}
+
 export function elementText(element:Element):string{
     return cleanText(element.textContent ?? "");
 }

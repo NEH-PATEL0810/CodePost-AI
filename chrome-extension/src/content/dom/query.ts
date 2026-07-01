@@ -38,3 +38,11 @@ export function queryText(selectors:SelectorList,error:ExtractionError):string{
     const element = queryRequired(selectors,error);
     return(element.textContent ?? "").trim();
 }
+
+export function queryOptional(
+    selectors:SelectorList
+): Element | null {
+    return queryOne(selectors);
+}
+
+
