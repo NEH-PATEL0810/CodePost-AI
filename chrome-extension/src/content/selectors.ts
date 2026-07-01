@@ -5,12 +5,14 @@
  * Centralizing them here makes updates easy when LeetCode changes its HTML.
  * Selectors will be populated in Phase 4.2.
  */
-export const SELECTORS = {
-    TITLE: "",
-    DESCRIPTION: "",
-    DIFFICULTY: "",
-    CODE_EDITOR: "",
-    LANGUAGE: "",
-    EXAMPLES: "",
-    CONSTRAINTS: "",
-} as const;
+import type { SelectorList} from "./dom/types";
+
+export const SELECTORA: Record<string,SelectorList> = {
+    TITLE:[],
+    DESCRIPTION:[],
+    DIFFICULTY:[],
+    EXAMPLES:[],
+    CONSTRAINTS:[],
+    LANGUAGE:[],
+    CODE_EDITOR:[]
+};
