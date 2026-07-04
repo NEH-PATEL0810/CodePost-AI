@@ -10,12 +10,15 @@ export class ExtractionManager {
 
         const title = ExtractorRegistry.title(context);
         const difficulty = ExtractorRegistry.difficulty(context);
+        const description = ExtractorRegistry.description(context);
+        const examples = ExtractorRegistry.examples(context);
+        const constraints = ExtractorRegistry.constraints(context);
         return {
             title: title.value ?? "",
             difficulty:difficulty.value ?? "",
-            description: "",
-            examples: [],
-            constraints: [],
+            description: description.value??"",
+            examples: examples.value ?? [],
+            constraints:constraints.value?? [],
             language: "",
             code: "",
             url: context.url,
