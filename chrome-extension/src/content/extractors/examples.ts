@@ -1,7 +1,6 @@
 import { queryAll } from "../dom/query";
 import { SELECTORS } from "../selectors";
 import { elementText } from "../parser";
-import { debugLog } from "../debug";
 import { normalizeArray } from "@/core/normalization/arrays";
 import type { Extractor } from "@/core/extraction/interfaces";
 import type { ExtractionResult } from "@/core/extraction/result";
@@ -12,8 +11,6 @@ export const extractExamples: Extractor<string[]> = (
     try {
         const rawExamples = queryAll(SELECTORS.EXAMPLES).map(elementText);
         const examples = normalizeArray(rawExamples);
-
-        debugLog("Examples", examples);
 
         return {
             success: true,

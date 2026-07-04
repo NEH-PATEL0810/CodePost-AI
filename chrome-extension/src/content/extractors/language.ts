@@ -1,5 +1,4 @@
 import { SELECTORS } from "../selectors";
-import { debugLog } from "../debug";
 import { leetcodeAdapter } from "@/platforms/leetcode/adapter";
 import { parseText } from "@/platforms/leetcode/parser";
 import type { Extractor } from "@/core/extraction/interfaces";
@@ -11,8 +10,6 @@ export const extractLanguage: Extractor<string> = (
     try {
         const element = leetcodeAdapter.query(SELECTORS.LANGUAGE);
         const language = parseText(element);
-
-        debugLog("Language", language);
 
         return {
             success: true,

@@ -3,7 +3,6 @@ import { SELECTORS } from "../selectors";
 import { ExtractionError } from "../errors";
 import { elementText } from "../parser";
 import { normalizeText } from "@/core/normalization/text";
-import { debugLog } from "../debug";
 import type { Extractor } from "@/core/extraction/interfaces";
 import type { ExtractionResult } from "@/core/extraction/result";
 
@@ -17,11 +16,6 @@ export const extractDescription: Extractor<string> = (
         );
 
         const description = normalizeText(elementText(element));
-        
-        debugLog(
-            "Description",
-            description
-        );
 
         return {
             success: true,

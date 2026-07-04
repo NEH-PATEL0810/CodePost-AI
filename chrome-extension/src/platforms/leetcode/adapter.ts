@@ -6,6 +6,20 @@ export interface PlatformAdapter {
     queryAll(
         selectors: string[]
     ): Element[];
+
+    getText(
+        selectors:string[]
+    ):string;
+
+    getTexts(
+    selectors: string[]
+    ):string[];
+
+    exists(
+        selectors:string[]
+    ):boolean;
+
+
 }
 
 class LeetCodeAdapter
@@ -44,6 +58,36 @@ class LeetCodeAdapter
         }
 
         return [];
+
+    }
+
+    getText(
+        selectors: string[]
+    ): string {
+
+        return this
+            .query(selectors)
+            ?.textContent
+            ?.trim() ?? "";
+
+    }
+
+    getTexts(
+        selectors: string[]
+    ): string[] {
+
+        return this
+            .queryAll(selectors)
+            .map(el => el.textContent?.trim() ?? "")
+            .filter(text => text.length > 0);
+
+    }
+
+    exists(
+        selectors: string[]
+    ): boolean {
+
+        return this.query(selectors) !== null;
 
     }
 

@@ -2,52 +2,34 @@ import { queryText } from "../dom/query";
 import { SELECTORS } from "../selectors";
 import { ExtractionError } from "../errors";
 import { cleanText } from "../parser";
-import { debugLog } from "../debug";
-
-// export function extractTitle():string{
-//    const title = cleanText(
-//     queryText(
-//         SELECTORS.TITLE,
-//         ExtractionError.TITLE_NOT_FOUND
-//     )
-//    );
-
-//    debugLog(
-//     "Problem Title",
-//     title
-//    );
-//    return title;
-// }
-
-import type {Extractor} from "@/core/extraction/interfaces";
-// import type {ExtractionContext} from "@/core/extraction/context";
-import type {ExtractionResult} from "@/core/extraction/result";
+import { normalizeTitle } from "@/core/normalization/title";
+import type { Extractor } from "@/core/extraction/interfaces";
+import type { ExtractionResult } from "@/core/extraction/result";
 
 export const extractTitle: Extractor<string> = (
     context
-) : ExtractionResult<string> => {
-    try{
-          const title = cleanText(
-    queryText(
-        SELECTORS.TITLE,
-        ExtractionError.TITLE_NOT_FOUND
-    )
-   );
+): ExtractionResult<string> => {
+    try {
+        const raw = cleanText(
+            queryText(
+                SELECTORS.TITLE,
+                ExtractionError.TITLE_NOT_FOUND
+            )
+        );
+        const title = normalizeTitle(raw);
 
-   debugLog(
-    "Problem Title",
-    title
-   ); 
-   return {
-    success:true,
-    value:title,
-   }
-    }catch(error){
-        return{
-            success:false,
-            value:null,
+        return {
+            success: true,
+            value: title,
+        };
+    } catch (error) {
+        return {
+            success: false,
+            value: null,
             error:
-            error instanceof Error ? error.message : "Unknown title extraction error",
+                error instanceof Error
+                    ? error.message
+                    : "Unknown title extraction error",
         };
     }
 };

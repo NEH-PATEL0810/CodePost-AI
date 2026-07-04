@@ -1,12 +1,9 @@
 import { queryRequired } from "../dom/query";
 import { SELECTORS } from "../selectors";
-import  { ExtractionError } from "../errors";
-import {debugLog} from "../debug";
+import { ExtractionError } from "../errors";
 import { cleanText } from "../parser";
 import type { Extractor } from "@/core/extraction/interfaces";
 import type { ExtractionResult } from "@/core/extraction/result";
-
-
 
 export const extractDifficulty: Extractor<string> = (
     context
@@ -18,11 +15,6 @@ export const extractDifficulty: Extractor<string> = (
         );
 
         const difficulty = cleanText(element.textContent ?? "");
-
-        debugLog(
-            "Difficulty",
-            difficulty
-        );
 
         return {
             success: true,
