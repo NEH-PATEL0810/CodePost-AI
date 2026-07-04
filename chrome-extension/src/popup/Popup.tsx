@@ -8,6 +8,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { usePageStatus } from "./hooks/usePageStatus";
 import Header from "./components/header";
+import { Footer } from "./components/Footer";
+import { LoadingCard } from "./components/LoadingCard";
 
 function StatusSkeleton() {
   return (
@@ -19,12 +21,13 @@ function StatusSkeleton() {
 }
 
 export default function Popup() {
-  const { loading, status } = usePageStatus();
+  // const { loading, status } = usePageStatus();
 
   return (
     <>
       <Header />
-      <div className="w-[360px] px-6 pb-6">
+      <LoadingCard/>
+      {/* <div className="w-[360px] px-6 pb-6">
         <Card>
           <CardContent className="pt-4 space-y-4">
             {loading ? (
@@ -47,7 +50,8 @@ export default function Popup() {
             )}
           </CardContent>
         </Card>
-      </div>
+      </div> */}
+      <Footer />
     </>
   );
 }
