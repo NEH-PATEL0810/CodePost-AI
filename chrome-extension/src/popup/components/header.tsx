@@ -1,13 +1,17 @@
-export default function Header(){
-    return(
-        <header className="mb-6">
+export default function Header() {
+
+    return (
+
+        <header className="border-b px-5 py-4">
             <h1 className="text-2xl font-bold">
-                CodePostAI
+                CodePost AI
             </h1>
 
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
                 AI Documentation Assistant
             </p>
         </header>
+
     );
+
 }

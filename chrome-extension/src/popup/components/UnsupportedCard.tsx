@@ -1,19 +1,27 @@
-import {
-Card,
-CardContent,
-} from "@/components/ui/card";
+import { TriangleAlert } from "lucide-react";
 
 export function UnsupportedCard(){
 return(
-<Card>
-<CardContent className="py-6 text-center">
-<h2 className="font-semibold">
-Unsupported Page
-</h2>
-<p className="mt-2 text-sm text-muted-foreground">
-Open any LeetCode problem to generate documentation.
-</p>
-</CardContent>
-</Card>
+ <div className="py-10 text-center">
+
+            <TriangleAlert
+                className="mx-auto mb-3"
+
+            />
+
+            <h2 className="font-semibold">
+
+                Unsupported Page
+
+            </h2>
+
+            <p className="text-sm text-muted-foreground mt-2">
+
+                Open a LeetCode problem page to continue.
+
+            </p>
+
+        </div>
+
 );
 }

@@ -26,13 +26,14 @@ export default function Popup() {
   useExtraction(tab?.id,setState);
 
   return (
-    <>
-      <Header />
-      {/* <LoadingCard/> */}
-      
-       <PopupRouter state={state} />
+<div className="w-[380px] min-h-[520px] bg-background flex flex-col">
+  <Header />
 
-      <Footer />
-    </>
+  <main className="flex-1 p-4">
+    <PopupRouter state={state} />
+  </main>
+
+  <Footer />
+</div>
   );
 }
