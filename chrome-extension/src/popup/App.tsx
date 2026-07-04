@@ -9,6 +9,7 @@ import { usePopupState } from "./hooks/usePopupState";
 import { useCurrentTab } from "./hooks/useCurrenttab";
 import { PopupRouter } from "./components/PopupRouter";
 import { useExtraction } from "./hooks/useExtraction";
+import { useGeneration } from "./hooks/useGeneration";
 
 // function StatusSkeleton() {
 //   return (
@@ -25,12 +26,14 @@ export default function Popup() {
   const tab = useCurrentTab();
   useExtraction(tab?.id,setState);
 
+  const { state: genState, generate } = useGeneration();
+
   return (
 <div className="w-[380px] min-h-[520px] bg-background flex flex-col">
   <Header />
 
   <main className="flex-1 p-4">
-    <PopupRouter state={state} />
+    <PopupRouter state={state} genState={genState} generate={generate} />
   </main>
 
   <Footer />

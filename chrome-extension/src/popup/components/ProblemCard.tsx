@@ -8,12 +8,16 @@ import {LanguageBadge} from "./LanguageBadge";
 
 import {ProgressCard} from "./ProgressCard";
 
+import {GenerateButton} from "./GenerateButton";
+
 interface Props {
-problem: ProblemData;
+    problem: ProblemData;
+    generate: (problem: ProblemData) => void;
 }
 
 export function ProblemCard({
     problem,
+    generate,
 }: Props) {
 
     const score = [
@@ -44,6 +48,9 @@ export function ProblemCard({
                 </div>
                 <ProgressCard
                     score={score}
+                />
+                <GenerateButton
+                    onClick={() => generate(problem)}
                 />
             </CardContent>
         </Card>
