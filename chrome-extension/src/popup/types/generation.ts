@@ -2,7 +2,7 @@ export type GenerationStatus = |"idle"|"generating"|"completed"|"failed";
 
 export interface GenerationState{
     status:GenerationStatus;
-    // markdown:string;
+    markdown:string;
     result:GeneratedSolution | null;
     error:string | null;
 }

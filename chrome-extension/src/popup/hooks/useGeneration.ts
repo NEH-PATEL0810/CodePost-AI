@@ -16,28 +16,31 @@ export function useGeneration(){
     const [state,setState] = useState(initialGenerationState);
 
     async function generate(problem:ProblemData){
-        setState({
+        setState(prev => ({
+            ...prev,
             status:"generating",
             markdown:"",
             error:null,
-        });
+        }));
 
         try{
             const markdown = await generateDocumentation(problem);
-            setState({
+            setState(prev => ({
+                ...prev,
                 status:"completed",
                 markdown,
                 error:null
-            })
+            }))
         }
         catch(error){
-            setState({
+            setState(prev => ({
+                ...prev,
                 status:"failed",
                 markdown:"",
                 error:
                 error instanceof Error
                 ? error.message:"Unknown error",
-            });
+            }));
         }
     }
     return{
