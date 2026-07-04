@@ -13,13 +13,14 @@ export class ExtractionManager {
         const description = ExtractorRegistry.description(context);
         const examples = ExtractorRegistry.examples(context);
         const constraints = ExtractorRegistry.constraints(context);
+        const language = ExtractorRegistry.language(context);
         return {
             title: title.value ?? "",
             difficulty:difficulty.value ?? "",
             description: description.value??"",
             examples: examples.value ?? [],
             constraints:constraints.value?? [],
-            language: "",
+            language: language.value ?? "",
             code: "",
             url: context.url,
         };
