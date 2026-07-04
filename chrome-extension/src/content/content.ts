@@ -13,25 +13,25 @@
 
 // ⚠️ Must be first — guards against "Extension context invalidated" errors
 // thrown by the @crxjs/vite-plugin HMR client when the extension reloads.
-import {
-    inspectRuntime
-} from "@/diagnostics/runtimeProbe";
+// import {
+//     inspectRuntime
+// } from "@/diagnostics/runtimeProbe";
 
-import {
-    inspectMonaco
-} from "@/diagnostics/monacoProbe";
+// import {
+//     inspectMonaco
+// } from "@/diagnostics/monacoProbe";
 
-import {
-    inspectReact
-} from "@/diagnostics/reactProbe";
+// import {
+//     inspectReact
+// } from "@/diagnostics/reactProbe";
 
-import {
-    inspectEditor
-} from "@/diagnostics/editorProbe";
+// import {
+//     inspectEditor
+// } from "@/diagnostics/editorProbe";
 import { installExtensionContextGuard } from "@/utils/extensionContext";
 installExtensionContextGuard();
 
-import { inspectFiber } from "@/diagnostics/fiber";
+// import { inspectFiber } from "@/diagnostics/fiber";
 import { extractProblem } from "./extractor";
 import { MessageType } from "@/types/messages";
 import { debugLog } from "./debug";

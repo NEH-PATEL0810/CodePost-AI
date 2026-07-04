@@ -1,6 +1,6 @@
 export interface ExtractionResult<T> {
     success : boolean;
-    value?: T;
+    value: T|null ;
     error?: string;
 
 }
