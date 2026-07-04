@@ -2,20 +2,12 @@ import { ApiClient } from "@/api/client";
 import {API} from "@/api/endpoints";
 import type { GenerateRequest,GenerateResponse} from "@/api/types";
 import type { ProblemData } from "@/core/types/problem";
+import { mapProblemToGenerateRequest } from "@/api/mappers/generationMapper";
 
 
 
 export async function generateDocumentation(problem:ProblemData):Promise<GenerateResponse["result"]>{
-    const request:GenerateRequest = {
-        title: problem.title,
-        difficulty:problem.difficulty,
-        description:problem.description,
-        examples:problem.examples,
-        constraints:problem.constraints,
-        language:problem.language,
-        code:problem.code,
-        url:problem.url,
-    };
+    const request = mapProblemToGenerateRequest(problem);
 
     console.log("Request =", request);
     console.log("Code length =", request.code.length);

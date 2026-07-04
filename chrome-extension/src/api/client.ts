@@ -36,9 +36,12 @@ export class ApiClient {
 
             const text = await response.text();
 
-            console.error(text);
+            console.error("Backend Error Response:", text);
 
-            throw new ApiError(text, response.status);
+            throw new ApiError(
+                "Generation request failed.",
+                response.status
+            );
         }
 
         return response.json();
