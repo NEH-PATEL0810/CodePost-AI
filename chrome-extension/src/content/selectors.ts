@@ -29,6 +29,16 @@ export const SELECTORS: Record<string,SelectorList> = {
     CONSTRAINTS:[
         "ul.mt-4",
     ],
-    LANGUAGE:[],
-    CODE_EDITOR:[]
+   LANGUAGE: [
+
+    "#editor button[aria-haspopup='dialog']",
+
+    "#editor button[type='button']",
+
+],
+    
+    CODE_EDITOR:[
+        "#fdda0b14-c759-8ad9-4ddd-9fdcd57a96e3",
+        "div.view-lines.monaco-scrolltop-container.monaco-readonly.vs"
+    ]
 };

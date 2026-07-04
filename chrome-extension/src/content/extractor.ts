@@ -8,28 +8,24 @@ import type { ProblemData } from "@/types/problem";
  *
  * ⚠️ Placeholder implementation — actual DOM extraction in Phase 4.2.
  */
-import { extractTitle } from "./extractors/title";
-import { extractDifficulty } from "./extractors/difficulty";
-import { extractDescription } from "./extractors/description";
-import { extractExample } from "./extractors/examples";
-import { extractConstraints } from "./extractors/constraints";
-import { extractLanguage } from "./extractors/language";
-import { extractCode } from "./extractors/code";
 import { debugLog } from "./debug";
+import { ExtractionManager } from "@/core/extraction/manager";
+import type { ExtractionContext } from "@/core/extraction/context";
+
 
 export function extractProblem(): ProblemData {
     debugLog(
         "Extracting Problem",
         window.location.href
     );
-    return {
-        title: extractTitle(),
-        difficulty: extractDifficulty(),
-        description: extractDescription(),
-        examples: extractExample(),
-        constraints: extractConstraints(),
-        language: extractLanguage(),
-        code: extractCode(),
+
+    const context: ExtractionContext = {
+        document,
         url: window.location.href,
     };
+
+    const manager = new ExtractionManager();
+
+
+    return manager.extract(context);
 }

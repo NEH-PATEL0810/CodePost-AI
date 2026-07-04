@@ -13,17 +13,41 @@
 
 // ⚠️ Must be first — guards against "Extension context invalidated" errors
 // thrown by the @crxjs/vite-plugin HMR client when the extension reloads.
+import {
+    inspectRuntime
+} from "@/diagnostics/runtimeProbe";
+
+import {
+    inspectMonaco
+} from "@/diagnostics/monacoProbe";
+
+import {
+    inspectReact
+} from "@/diagnostics/reactProbe";
+
+import {
+    inspectEditor
+} from "@/diagnostics/editorProbe";
 import { installExtensionContextGuard } from "@/utils/extensionContext";
 installExtensionContextGuard();
 
+import { inspectFiber } from "@/diagnostics/fiber";
 import { extractProblem } from "./extractor";
 import { MessageType } from "@/types/messages";
 import { debugLog } from "./debug";
 import { LOGS } from "@/constants/messages";
 
 debugLog(LOGS.CONTENT_LOADED);
-// const problem = extractProblem();
-// console.log(problem);
+// inspectRuntime();
+
+// inspectMonaco();
+
+// inspectReact();
+
+// inspectEditor();
+// inspectFiber();
+const problem = extractProblem();
+console.log(problem);
 
 chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
     switch (message.type) {
