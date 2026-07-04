@@ -13,4 +13,6 @@ export interface ProblemData {
     language: string;
 
     code: string;
+
+    url: string;
 }

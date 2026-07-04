@@ -19,16 +19,16 @@ export function useGeneration(){
         setState(prev => ({
             ...prev,
             status:"generating",
-            markdown:"",
+            result:null,
             error:null,
         }));
 
         try{
-            const markdown = await generateDocumentation(problem);
+            const result = await generateDocumentation(problem);
             setState(prev => ({
                 ...prev,
                 status:"completed",
-                markdown,
+                result,
                 error:null
             }))
         }
@@ -36,7 +36,7 @@ export function useGeneration(){
             setState(prev => ({
                 ...prev,
                 status:"failed",
-                markdown:"",
+                result:null,
                 error:
                 error instanceof Error
                 ? error.message:"Unknown error",

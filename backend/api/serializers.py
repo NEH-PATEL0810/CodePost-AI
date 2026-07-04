@@ -12,7 +12,10 @@ class GenerateRequestSerializer(serializers.Serializer):
         required=False,
     )
     language=serializers.CharField()
-    code = serializers.CharField()
+    code = serializers.CharField(
+        required=False,
+        allow_blank=True,
+    )
     url = serializers.URLField()
 
 
