@@ -26,15 +26,25 @@ def generate(request):
         raise_exception = True
     )
 
-    problem = ProblemData(**serializer.validated_data)
-    service = GenerationService()
+    try:
+        service = GenerationService()
 
-    markdown = service.generate(problem)
+        markdown = service.generate(
+            serializer.validated_data
+        )
 
-    return Response({
-        "success": True,
-        "result": {
-            "markdown": markdown
-        },
-    })
+        return Response(
+            {
+                "result": {
+                    "markdown": markdown
+                }
+            }
+        )
+    except Exception as e:
+        return Response(
+            {
+                "error": str(e)
+            },
+            status=500,
+        )
 # Create your views here.
