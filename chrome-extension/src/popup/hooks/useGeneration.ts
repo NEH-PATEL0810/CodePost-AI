@@ -29,10 +29,12 @@ export function useGeneration(){
             const result = await generateDocumentation(problem);
             
             setDocument({
+                problem,
                 originalMarkdown: result.markdown,
                 currentMarkdown: result.markdown,
                 generatedAt: new Date(),
                 isEdited: false,
+                isGenerating: false,
             });
 
             setState(prev => ({

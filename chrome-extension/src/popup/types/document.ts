@@ -1,4 +1,8 @@
+import type { ProblemData } from "@/core/types/problem";
+
 export interface SolutionDocument {
+
+    problem: ProblemData;
 
     originalMarkdown: string;
 
@@ -7,6 +11,8 @@ export interface SolutionDocument {
     generatedAt: Date;
 
     isEdited: boolean;
+
+    isGenerating: boolean;
 
     score?: number;
 

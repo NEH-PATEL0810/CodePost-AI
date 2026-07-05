@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { RegenerateButton } from "./RegenerateButton";
 
 export function PreviewToolbar() {
 
@@ -6,17 +7,7 @@ export function PreviewToolbar() {
 
         <div className="flex gap-2">
 
-            <Button>
-
-                Regenerate
-
-            </Button>
-
-            <Button variant="outline">
-
-                Score
-
-            </Button>
+            <RegenerateButton />
 
             <Button>
 
