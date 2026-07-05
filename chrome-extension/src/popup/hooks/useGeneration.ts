@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDocument } from "../context/DocumentContext";
 
 import {
     initialGenerationState,
@@ -13,6 +14,7 @@ import type {
 } from "@/core/types/problem";
 
 export function useGeneration(){
+    const { setDocument } = useDocument();
     const [state,setState] = useState(initialGenerationState);
 
     async function generate(problem:ProblemData){
@@ -25,12 +27,20 @@ export function useGeneration(){
 
         try{
             const result = await generateDocumentation(problem);
+            
+            setDocument({
+                originalMarkdown: result.markdown,
+                currentMarkdown: result.markdown,
+                generatedAt: new Date(),
+                isEdited: false,
+            });
+
             setState(prev => ({
                 ...prev,
                 status:"completed",
                 result,
                 error:null
-            }))
+            }));
         }
         catch(error){
             setState(prev => ({

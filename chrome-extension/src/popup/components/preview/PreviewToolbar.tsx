@@ -14,12 +14,6 @@ export function PreviewToolbar() {
 
             <Button variant="outline">
 
-                Edit
-
-            </Button>
-
-            <Button variant="outline">
-
                 Score
 
             </Button>

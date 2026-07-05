@@ -20,7 +20,7 @@ export function PopupRouter({state, genState, generate}: Props){
     }
     
     if (genState.status === "completed") {
-        return <PreviewCard problem={state.problem!} markdown={genState.result?.markdown || ""} />;
+        return <PreviewCard problem={state.problem!} />;
     }
     
     if (genState.status === "failed") {
