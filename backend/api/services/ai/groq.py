@@ -15,6 +15,7 @@ class GroqProvider(AIProvider):
         self.client = Groq(
             api_key=AIConfig.API_KEY
         )
+        self.model = AIConfig.MODEL
 
     def generate(self, prompt: str) -> str:
         """
@@ -22,31 +23,40 @@ class GroqProvider(AIProvider):
         """
         try:
             response = self.client.chat.completions.create(
-                model=AIConfig.MODEL,
+                model=self.model,
+                temperature=0.2,
+                max_tokens=900,
+                top_p=0.9,
                 messages=[
-                    {
-                        "role": "system",
-                        "content": (
-                            "You are an expert technical writer. "
-                            "Explain ONLY the user's accepted solution. "
-                            "Return valid GitHub-flavored Markdown."
-                        ),
-                    },
                     {
                         "role": "user",
                         "content": prompt,
-                    },
+                    }
                 ],
-                temperature=AIConfig.TEMPERATURE,
-                max_completion_tokens=AIConfig.MAX_TOKENS,
             )
 
-            content = response.choices[0].message.content
+            markdown = response.choices[0].message.content
 
-            if not content:
+            if not markdown:
                 raise RuntimeError("Groq returned an empty response.")
 
-            return content
+            markdown = markdown.strip()
+
+            noise = [
+                "Sure!",
+                "Certainly!",
+                "Here is",
+                "Here's",
+                "Of course!",
+            ]
+
+            for prefix in noise:
+                if markdown.startswith(prefix):
+                    first_heading = markdown.find("# ")
+                    if first_heading != -1:
+                        markdown = markdown[first_heading:]
+
+            return markdown
 
         except Exception as e:
             raise RuntimeError(f"Groq generation failed: {e}")

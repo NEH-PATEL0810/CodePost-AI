@@ -1,29 +1,29 @@
-from .templates import DOCUMENTATION_TEMPLATE
+from .prompt_rules import DOCUMENTATION_RULES
+from .constants import PROMPT_VERSION
 
 class PromptBuilder:
     @staticmethod
     def build(problem):
-        return f"""
-{DOCUMENTATION_TEMPLATE}
-
-Problem Title:
-{problem.title}
-
-Difficulty:
-{problem.difficulty}
-
-Description:
-{problem.description}
-
-Examples:
-{chr(10).join(problem.examples)}
-
-Constraints:
-{chr(10).join(problem.constraints)}
-
-Programming Language:
-{problem.language}
-
-User Code:
-{problem.code}
-"""
+        parts = [
+            DOCUMENTATION_RULES,
+            "",
+            f"Problem Title:\n{problem.title}",
+            "",
+            f"Difficulty:\n{problem.difficulty}",
+            "",
+            f"Description:\n{problem.description}",
+            "",
+            "Examples:",
+            *problem.examples,
+            "",
+            "Constraints:",
+            *problem.constraints,
+            "",
+            f"Programming Language:\n{problem.language}",
+            "",
+            "User Code:",
+            problem.code,
+        ]
+        parts.append("")
+        parts.append(f"Prompt Version: {PROMPT_VERSION}")
+        return "\n".join(parts)

@@ -17,6 +17,16 @@ class ResponseValidator:
 
     ]
 
+    FORBIDDEN_HEADERS = [
+
+        "# Code",
+
+        "# Solution",
+
+        "# Implementation",
+
+    ]
+
     MIN_LENGTH = 100
 
     def clean(
@@ -78,6 +88,14 @@ class ResponseValidator:
 
                 errors.append(
                     f"Missing section: {section}"
+                )
+
+        for forbidden in self.FORBIDDEN_HEADERS:
+            header_name = forbidden.lstrip("#").strip()
+            pattern = rf"^\s*#+\s*{re.escape(header_name)}\s*$"
+            if re.search(pattern, markdown, re.MULTILINE | re.IGNORECASE):
+                errors.append(
+                    f"Unexpected section: {forbidden}"
                 )
 
         if len(markdown) < self.MIN_LENGTH:

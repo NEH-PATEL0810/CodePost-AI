@@ -24,6 +24,17 @@ class GenerationService:
 
         prompt = self.builder.build(problem)
         markdown = self.provider.generate(prompt)
+
+        print("=" * 70)
+        print("Groq Markdown")
+        print("=" * 70)
+        print(markdown[:1000])
+
+        if len(markdown) > 1000:
+            print("...truncated...")
+
+        print("=" * 70)
+
         result = self.validator.validate(markdown)
 
         print("\n" + "=" * 60)
