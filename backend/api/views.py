@@ -6,7 +6,7 @@ from .serializers import(
     GenerateRequestSerializer,
 )
 
-from .services.ai.service import GenerationService
+from .services.generation_service import GenerationService
 from .services.ai.context import ProblemData
 
 @api_view(["GET"])
@@ -35,8 +35,13 @@ def generate(request):
 
         return Response(
             {
+                "success": True,
                 "result": {
-                    "markdown": markdown
+                    "markdown": markdown,
+                    "metadata": {
+                        "provider": "groq",
+                        "version": "1.0"
+                    }
                 }
             }
         )
