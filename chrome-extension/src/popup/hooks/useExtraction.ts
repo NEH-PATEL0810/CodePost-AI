@@ -42,6 +42,7 @@ export function useExtraction(
                     status: "ready",
                     loading: false,
                     problem: response.problem,
+                    report: response.report,
                 }));
             } catch (error) {
                 setState((prev: any) => ({

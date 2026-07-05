@@ -2,15 +2,16 @@ import type { ExtractionContext } from "./context";
 import type { ProblemData } from "@/types/problem";
 import { ExtractorRegistry } from "./registry";
 import { validateProblem } from "@/core/validation/validator";
-import { extractionScore } from "@/core/validation/score";
-import { isReadyForGeneration } from "@/core/validation/readiness";
 import { debugLog } from "@/content/debug";
-import type { ExtrqactionDiagnostics } from "@/core/validation/diagnostics";
+import { extractCode } from "@/content/extractor/code";
+import { validateExtraction } from "@/core/extraction/validator";
+
+import type { ExtractionReport } from "@/core/extraction/report";
 
 export class ExtractionManager {
     extract(
         context: ExtractionContext
-    ): ProblemData {
+    ): { problem: ProblemData; report: ExtractionReport } {
 
         debugLog("Extraction Started");
 
@@ -29,41 +30,24 @@ export class ExtractionManager {
             examples: examples.value ?? [],
             constraints: constraints.value ?? [],
             language: language.value ?? "",
-            code: "",
+            code: extractCode(),
             url: context.url,
         };
 
         // Validate
         const validation = validateProblem(problem);
 
-        // Diagnostics
-        const diagnostics: ExtrqactionDiagnostics = {
-            title: title.success,
-            difficulty: difficulty.success,
-            description: description.success,
-            examples: examples.success,
-            constraints: constraints.success,
-            language: language.success,
-            code: false,
-        };
-
-        // Score
-        const score = extractionScore(problem);
-
-        // Ready
-        const ready = isReadyForGeneration(problem);
+        const report = validateExtraction(problem);
 
         // Consolidated logging
         debugLog("Extraction Complete");
         console.log("ProblemData", problem);
-        console.log(`Extraction Score: ${score} / 7`);
-        console.log(`Ready For Generation: ${ready}`);
-        console.log("Diagnostics", diagnostics);
+        debugLog("Extraction Report", report);
 
         if (validation.errors.length > 0) {
             console.table(validation.errors);
         }
 
-        return problem;
+        return { problem, report };
     }
 }

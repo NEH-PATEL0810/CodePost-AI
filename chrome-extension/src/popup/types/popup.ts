@@ -1,4 +1,6 @@
 import type { ProblemData } from "@/types/problem";
+import type { ExtractionReport } from "@/core/extraction/report";
+
 
 export type PopupStatus =
     | "idle"
@@ -18,4 +20,5 @@ export interface PopupState{
     loading: boolean;
     error:string|null;
     problem:ProblemData|null;
+    report?: ExtractionReport;
 }

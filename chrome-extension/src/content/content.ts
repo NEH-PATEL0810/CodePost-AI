@@ -46,16 +46,16 @@ debugLog(LOGS.CONTENT_LOADED);
 
 // inspectEditor();
 // inspectFiber();
-const problem = extractProblem();
-console.log(problem);
+const { problem, report } = extractProblem();
+console.log({ problem, report });
 
 chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
     switch (message.type) {
         case MessageType.EXTRACT_PROBLEM: {
             debugLog(LOGS.EXTRACTION_STARTED);
-            const problem = extractProblem();
-            debugLog(LOGS.EXTRACTION_COMPLETED, problem);
-            sendResponse({ problem });
+            const { problem, report } = extractProblem();
+            debugLog(LOGS.EXTRACTION_COMPLETED, { problem, report });
+            sendResponse({ problem, report });
             break;
         }
     }
