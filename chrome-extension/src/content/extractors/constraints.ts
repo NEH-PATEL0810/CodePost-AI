@@ -1,5 +1,7 @@
 import { queryOptional } from "../dom/query";
 import { SELECTORS } from "../selectors";
+import { getConstraintsList } from "../extractor/problem/sections/parser";
+import { debugLog } from "../debug";
 import { cleanPreserveLines } from "../parser";
 import { normalizeArray } from "@/core/normalization/arrays";
 import type { Extractor } from "@/core/extraction/interfaces";
@@ -18,24 +20,27 @@ export const extractConstraints: Extractor<string[]> = (
     context
 ): ExtractionResult<string[]> => {
     try {
-const element = queryOptional(SELECTORS.CONSTRAINTS);
+        const list = getConstraintsList();
 
-console.log("Constraint Element:", element);
-
-        if (!element) {
+        if (!list) {
             return {
                 success: true,
                 value: [],
             };
         }
 
-        const rawText = cleanPreserveLines(element.textContent ?? "");
-        const rawConstraints = rawText.split("\n").filter(Boolean);
-        const constraints = normalizeArray(rawConstraints);
+        const constraints = Array.from(
+            list.querySelectorAll("li")
+        ).map(li =>
+            cleanPreserveLines(li.textContent ?? "")
+        );
+
+        debugLog("Constraint List", list);
+        debugLog("Constraints", constraints);
 
         return {
             success: true,
-            value: constraints,
+            value: normalizeArray(constraints),
         };
     } catch (error) {
         return {

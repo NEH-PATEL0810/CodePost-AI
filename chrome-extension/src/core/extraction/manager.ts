@@ -6,12 +6,12 @@ import { debugLog } from "@/content/debug";
 import { extractCode } from "@/content/extractor/code";
 import { validateExtraction } from "@/core/extraction/validator";
 
-import type { ExtractionReport } from "@/core/extraction/report";
+import type { ExtractionResponse } from "@/types/extraction";
 
 export class ExtractionManager {
     extract(
         context: ExtractionContext
-    ): { problem: ProblemData; report: ExtractionReport } {
+    ): ExtractionResponse {
 
         debugLog("Extraction Started");
 

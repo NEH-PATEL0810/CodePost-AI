@@ -1,5 +1,4 @@
-import type { ProblemData } from "@/types/problem";
-import type { ExtractionReport } from "@/core/extraction/report";
+import type { ExtractionResponse } from "@/types/extraction";
 
 /**
  * Single entry point for all DOM extraction.
@@ -14,7 +13,7 @@ import { ExtractionManager } from "@/core/extraction/manager";
 import type { ExtractionContext } from "@/core/extraction/context";
 
 
-export function extractProblem(): { problem: ProblemData; report: ExtractionReport } {
+export function extractProblem(): ExtractionResponse {
     debugLog(
         "Extracting Problem",
         window.location.href
