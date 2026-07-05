@@ -54,9 +54,9 @@ class CodeValidator:
 
         if problem.language == "C++":
 
-            # Empty body {}
+            # Detect empty function body {} (ignoring standard initializer lists like return {};)
             if re.search(
-                r"\{\s*\}",
+                r"\b(?!if\b|for\b|while\b|switch\b|catch\b)\w+\s*\([^)]*\)\s*(?:const\s+)?(?:override\s+)?\{\s*\}",
                 joined,
                 re.DOTALL,
             ):
@@ -65,7 +65,7 @@ class CodeValidator:
         if problem.language == "Java":
 
             if re.search(
-                r"\{\s*\}",
+                r"\b(?!if\b|for\b|while\b|switch\b|catch\b)\w+\s*\([^)]*\)\s*(?:const\s+)?(?:override\s+)?\{\s*\}",
                 joined,
                 re.DOTALL,
             ):
