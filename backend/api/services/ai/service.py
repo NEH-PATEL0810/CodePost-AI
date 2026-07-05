@@ -1,17 +1,27 @@
+import re
 from .prompt_builder import PromptBuilder
 from .context import ProblemData
 from .groq import GroqProvider
 from .validator import ResponseValidator
+from .composer import MarkdownComposer
+from .code_validator import CodeValidator
 
 class GenerationService:
     def __init__(self):
         self.provider = GroqProvider()
         self.builder = PromptBuilder()
         self.validator = ResponseValidator()
+        self.composer = MarkdownComposer()
+        self.code_validator = CodeValidator()
     
     def generate(self, problem):
         if isinstance(problem, dict):
             problem = ProblemData(**problem)
+        
+        valid, message = self.code_validator.validate(problem)
+        if not valid:
+            raise RuntimeError(message)
+
         prompt = self.builder.build(problem)
         markdown = self.provider.generate(prompt)
         result = self.validator.validate(markdown)
@@ -26,4 +36,16 @@ class GenerationService:
         if not result.valid:
             raise RuntimeError("\n".join(result.errors))
 
-        return result.markdown
+        final_markdown = self.composer.compose(
+            documentation=result.markdown,
+            problem=problem,
+        )
+
+        print("\n")
+        print("=" * 60)
+        print("Markdown Composer")
+        print("=" * 60)
+        print(final_markdown)
+        print("=" * 60)
+
+        return final_markdown
