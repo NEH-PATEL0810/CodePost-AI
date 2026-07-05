@@ -59,7 +59,4 @@ chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
             break;
         }
     }
-
-    // Return true to keep the message channel open for async responses.
-    return true;
 });

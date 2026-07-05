@@ -20,11 +20,31 @@ export function PopupRouter({state, genState, generate}: Props){
     }
     
     if (genState.status === "completed") {
-        return <PreviewCard markdown={genState.result?.markdown || ""} />;
+        return <PreviewCard problem={state.problem!} markdown={genState.result?.markdown || ""} />;
     }
     
     if (genState.status === "failed") {
-        return <ErrorCard />;
+        let displayError = genState.error || "An unexpected error occurred.";
+        const lower = displayError.toLowerCase();
+        
+        if (
+            lower.includes("incomplete") ||
+            lower.includes("boilerplate") ||
+            lower.includes("empty")
+        ) {
+            displayError = "No complete solution detected.\n\nFinish your solution before generating documentation.";
+        } else if (
+            lower.includes("rate limit")
+        ) {
+            displayError = "Rate limit exceeded.\n\nPlease wait a few seconds.";
+        } else if (
+            lower.includes("connect") ||
+            lower.includes("unavailable")
+        ) {
+            displayError = "Unable to contact AI provider.\n\nPlease try again.";
+        }
+        
+        return <ErrorCard message={displayError} />;
     }
 
     switch(state.status){
@@ -32,13 +52,13 @@ export function PopupRouter({state, genState, generate}: Props){
             return <UnsupportedCard />;
         
         case "error":
-            return <ErrorCard />;
+            return <ErrorCard message={state.error || "An error occurred while loading the problem."} />;
         
         case "ready":
             return state.problem ? (
                 <ProblemCard problem={state.problem} generate={generate} />
             ): (
-                <ErrorCard />
+                <ErrorCard message="No problem context found on the page." />
             );
         
         case "checking":

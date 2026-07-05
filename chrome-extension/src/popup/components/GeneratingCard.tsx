@@ -1,19 +1,37 @@
 import { LoaderCircle } from "lucide-react";
 
 export function GeneratingCard() {
-
     return (
+        <div className="space-y-6 animate-pulse">
+            {/* Header Skeleton */}
+            <div className="space-y-2">
+                <div className="h-6 bg-muted rounded w-3/4"></div>
+                <div className="h-4 bg-muted rounded w-1/4"></div>
+            </div>
 
-        <div className="py-10 text-center">
-            <LoaderCircle
-                className="mx-auto mb-4 animate-spin"
-            />
-            <p>
-               CodePost AI is generating documentation...
-            </p>
+            {/* Markdown Container Body Skeleton */}
+            <div className="space-y-3 rounded-md border p-4 h-[330px]">
+                <div className="flex items-center space-x-2">
+                    <LoaderCircle className="h-4 w-4 animate-spin text-muted-foreground" />
+                    <span className="text-sm text-muted-foreground">Generating documentation...</span>
+                </div>
+                <div className="h-4 bg-muted rounded w-full mt-4"></div>
+                <div className="h-4 bg-muted rounded w-5/6"></div>
+                <div className="h-4 bg-muted rounded w-4/6"></div>
+                <div className="h-4 bg-muted rounded w-full mt-6"></div>
+                <div className="h-4 bg-muted rounded w-11/12"></div>
+                <div className="h-4 bg-muted rounded w-3/4"></div>
+                <div className="h-4 bg-muted rounded w-5/6 mt-6"></div>
+                <div className="h-4 bg-muted rounded w-2/3"></div>
+            </div>
 
+            {/* Toolbar Skeleton */}
+            <div className="flex gap-2">
+                <div className="h-9 bg-muted rounded w-24"></div>
+                <div className="h-9 bg-muted rounded w-16"></div>
+                <div className="h-9 bg-muted rounded w-16"></div>
+                <div className="h-9 bg-muted rounded w-20"></div>
+            </div>
         </div>
-
     );
-
 }

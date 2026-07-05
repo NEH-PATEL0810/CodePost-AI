@@ -33,13 +33,19 @@ export class ApiClient {
         }
 
         if (!response.ok) {
-
             const text = await response.text();
-
             console.error("Backend Error Response:", text);
 
+            let errorMessage = "Generation request failed.";
+            try {
+                const parsed = JSON.parse(text);
+                errorMessage = parsed.message || parsed.error || errorMessage;
+            } catch (e) {
+                // Ignore parse errors
+            }
+
             throw new ApiError(
-                "Generation request failed.",
+                errorMessage,
                 response.status
             );
         }

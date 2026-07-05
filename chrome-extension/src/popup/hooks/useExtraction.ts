@@ -32,10 +32,54 @@ export function useExtraction(
                 }));
 
                 const response = await requestExtraction(tabId!);
-                console.log(
-    "[Popup] Response",
-    response
-);
+                console.log("[Popup] Response", response);
+
+                try {
+                    const results = await chrome.scripting.executeScript({
+                        target: { tabId: tabId! },
+                        world: "MAIN",
+                        func: () => {
+                            try {
+                                let code = "";
+                                if (window.monaco && window.monaco.editor) {
+                                    const models = window.monaco.editor.getModels();
+                                    if (models && models.length > 0) {
+                                        let mainModel = models[0];
+                                        for (let m of models) {
+                                            if (m.uri && m.uri.path && m.uri.path.indexOf('solution') !== -1) {
+                                                mainModel = m;
+                                                break;
+                                            }
+                                        }
+                                        code = mainModel.getValue();
+                                    }
+                                }
+                                if (!code) {
+                                    const cmContent = document.querySelector('.cm-content');
+                                    if (cmContent && cmContent.cmView && cmContent.cmView.view) {
+                                        code = cmContent.cmView.view.state.doc.toString();
+                                    }
+                                }
+                                if (!code) {
+                                    const editorEl = document.querySelector('.monaco-editor');
+                                    if (editorEl && editorEl.env && editorEl.env.editor) {
+                                        code = editorEl.env.editor.getValue();
+                                    }
+                                }
+                                return code;
+                            } catch (e) {
+                                return "";
+                            }
+                        }
+                    });
+
+                    const extractedCode = results?.[0]?.result;
+                    if (extractedCode && response.problem) {
+                        response.problem.code = extractedCode;
+                    }
+                } catch (scriptError) {
+                    console.warn("[Popup] Main world script injection failed, using fallback code.", scriptError);
+                }
 
                 setState((prev: any) => ({
                     ...prev,

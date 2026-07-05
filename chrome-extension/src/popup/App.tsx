@@ -26,7 +26,7 @@ export default function Popup() {
   const { state: genState, generate } = useGeneration();
 
   return (
-<div className="w-[380px] min-h-[520px] bg-background flex flex-col">
+<div className="w-full h-full bg-background flex flex-col">
   <Header />
 
   <main className="flex-1 p-4">
