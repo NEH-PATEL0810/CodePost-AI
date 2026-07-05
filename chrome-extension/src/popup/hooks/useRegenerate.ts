@@ -15,12 +15,6 @@ export function useRegenerate() {
 
         if (!document) return;
 
-        if (document.isEdited) {
-            if (!window.confirm("Regenerating will discard your edits. Continue?")) {
-                return;
-            }
-        }
-
         setDocument({
 
             ...document,
