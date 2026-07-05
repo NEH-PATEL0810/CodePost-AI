@@ -6,9 +6,8 @@ from .serializers import(
     GenerateRequestSerializer,
 )
 
-from .services import(
-    DocumentationGenerator,
-)
+from .services.ai.service import GenerationService
+from .services.ai.context import ProblemData
 
 @api_view(["GET"])
 def health(request):
@@ -27,12 +26,15 @@ def generate(request):
         raise_exception = True
     )
 
-    result = DocumentationGenerator().generate(
-        serializer.validated_data
-    )
+    problem = ProblemData(**serializer.validated_data)
+    service = GenerationService()
+
+    markdown = service.generate(problem)
 
     return Response({
         "success": True,
-        "result": result,
+        "result": {
+            "markdown": markdown
+        },
     })
 # Create your views here.

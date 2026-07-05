@@ -1,6 +1,8 @@
-from typing import TypedDict, List
+from typing import List
+from dataclasses import dataclass
 
-class ProblemData(TypedDict):
+@dataclass
+class ProblemData:
     title: str
     difficulty: str
     description: str
@@ -10,5 +12,6 @@ class ProblemData(TypedDict):
     code: str
     url: str
 
-class GenerationContext(TypedDict):
+@dataclass
+class GenerationContext:
     problem: ProblemData
