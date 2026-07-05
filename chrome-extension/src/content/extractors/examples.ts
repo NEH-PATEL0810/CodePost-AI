@@ -6,7 +6,7 @@ import type { Extractor } from "@/core/extraction/interfaces";
 import type { ExtractionResult } from "@/core/extraction/result";
 
 export const extractExamples: Extractor<string[]> = (
-    context
+    _context
 ): ExtractionResult<string[]> => {
     try {
         const rawExamples = queryAll(SELECTORS.EXAMPLES).map(elementText);

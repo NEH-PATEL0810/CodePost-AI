@@ -7,7 +7,7 @@ import type { Extractor } from "@/core/extraction/interfaces";
 import type { ExtractionResult } from "@/core/extraction/result";
 
 export const extractTitle: Extractor<string> = (
-    context
+    _context
 ): ExtractionResult<string> => {
     try {
         const raw = cleanText(

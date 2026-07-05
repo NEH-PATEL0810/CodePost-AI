@@ -1,10 +1,7 @@
 // Root component for the chrome extension's UI
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 // import { usePageStatus } from "./hooks/usePageStatus";
 import Header from "./components/header";
 import { Footer } from "./components/Footer";
-import { LoadingCard } from "./components/LoadingCard";
 import { usePopupState } from "./hooks/usePopupState";
 import { useCurrentTab } from "./hooks/useCurrenttab";
 import { PopupRouter } from "./components/PopupRouter";

@@ -1,23 +1,20 @@
 from groq import Groq
 
 from .provider import AIProvider
-from .config import (
-    GROQ_API_KEY,
-    GROQ_MODEL,
-)
+from .config import AIConfig
 
 
 class GroqProvider(AIProvider):
 
     def __init__(self):
 
-        if not GROQ_API_KEY:
+        if not AIConfig.API_KEY:
             raise RuntimeError(
                 "Missing GROQ_API_KEY"
             )
 
         self.client = Groq(
-            api_key=GROQ_API_KEY
+            api_key=AIConfig.API_KEY
         )
 
     def generate(
@@ -27,7 +24,7 @@ class GroqProvider(AIProvider):
 
         completion = self.client.chat.completions.create(
 
-            model=GROQ_MODEL,
+            model=AIConfig.MODEL,
 
             messages=[
 

@@ -17,6 +17,7 @@ export class TextareaStrategy implements CodeStrategy {
             return {
                 success: false,
                 code: "",
+                lineCount: 0,
                 strategy: this.name,
             };
 
@@ -27,6 +28,8 @@ export class TextareaStrategy implements CodeStrategy {
             success: true,
 
             code: textarea.value,
+
+            lineCount: textarea.value.split("\n").length,
 
             strategy: this.name,
 

@@ -1,5 +1,3 @@
-import { queryOptional } from "../dom/query";
-import { SELECTORS } from "../selectors";
 import { getConstraintsList } from "../extractor/problem/sections/parser";
 import { debugLog } from "../debug";
 import { cleanPreserveLines } from "../parser";
@@ -17,7 +15,7 @@ import type { ExtractionResult } from "@/core/extraction/result";
  * which extracts sections based on headings rather than CSS classes.
  */
 export const extractConstraints: Extractor<string[]> = (
-    context
+    _context
 ): ExtractionResult<string[]> => {
     try {
         const list = getConstraintsList();

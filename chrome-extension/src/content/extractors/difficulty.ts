@@ -6,7 +6,7 @@ import type { Extractor } from "@/core/extraction/interfaces";
 import type { ExtractionResult } from "@/core/extraction/result";
 
 export const extractDifficulty: Extractor<string> = (
-    context
+    _context
 ): ExtractionResult<string> => {
     try {
         const element = queryRequired(

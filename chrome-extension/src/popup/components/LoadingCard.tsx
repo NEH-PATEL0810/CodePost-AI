@@ -5,8 +5,6 @@ interface Props {
 }
 
 export function LoadingCard({ status }: Props){
-    const loadingText = status === "checking" ? "Checking page..." : "Extracting problem...";
-
     return(
         <div className="py-10 flex flex-col items-center gap-3">
              <LoaderCircle

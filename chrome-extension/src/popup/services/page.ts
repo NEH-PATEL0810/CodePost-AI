@@ -6,7 +6,7 @@ export type PageType =
     | "other";
 
 export function detectPage(url: string): PageType {
-    if (/^https:\/\/leetcode\.com\/problems\/[^/]+\/?$/.test(url))
+    if (/^https:\/\/leetcode\.com\/problems\/[^/]+/.test(url))
         return "problem";
 
     if (url.includes("/contest"))

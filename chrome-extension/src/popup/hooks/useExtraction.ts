@@ -9,7 +9,7 @@ export function useExtraction(
         if(!tabId) return;
 
         async function extract(){
-            const tab = await chrome.tabs.get(tabId);
+            const tab = (await chrome.tabs.get(tabId!)) as chrome.tabs.Tab;
 
             if (!tab.url) return;
 
@@ -31,7 +31,7 @@ export function useExtraction(
                     loading: true,
                 }));
 
-                const response = await requestExtraction(tabId);
+                const response = await requestExtraction(tabId!);
                 console.log(
     "[Popup] Response",
     response
