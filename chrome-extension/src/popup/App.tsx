@@ -17,6 +17,8 @@ import { useGeneration } from "./hooks/useGeneration";
 //   );
 // }
 
+import React, { useEffect } from "react";
+
 export default function Popup() {
   // const { loading, status } = usePageStatus();
   const  {state,setState} = usePopupState();
@@ -25,8 +27,39 @@ export default function Popup() {
 
   const { state: genState, generate } = useGeneration();
 
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    const applyTheme = (isDark: boolean) => {
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    };
+
+    // If there is a manual override, use it. Otherwise, use system settings.
+    if (savedTheme) {
+      applyTheme(savedTheme === "dark");
+    } else {
+      applyTheme(mediaQuery.matches);
+    }
+
+    // Listen for changes
+    const listener = (e: MediaQueryListEvent) => {
+      // Only transition with system if user hasn't toggled a manual override
+      if (!localStorage.getItem("theme")) {
+        applyTheme(e.matches);
+      }
+    };
+
+    mediaQuery.addEventListener('change', listener);
+    return () => mediaQuery.removeEventListener('change', listener);
+  }, []);
+
   return (
-<div className="w-full h-full bg-background flex flex-col">
+<div className="w-full h-full bg-background flex flex-col text-foreground transition-colors duration-200">
   <Header />
 
   <main className="flex-1 p-4">
