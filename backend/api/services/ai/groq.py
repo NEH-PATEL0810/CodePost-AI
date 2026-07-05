@@ -1,7 +1,13 @@
-from groq import Groq
+from groq import Groq, APIConnectionError, RateLimitError, APITimeoutError
 
 from .provider import AIProvider
 from .config import AIConfig
+from .exceptions import (
+    AIRateLimitError,
+    AIUnavailableError,
+    AIEmptyResponseError,
+    AITimeoutError,
+)
 
 
 class GroqProvider(AIProvider):
@@ -34,29 +40,40 @@ class GroqProvider(AIProvider):
                     }
                 ],
             )
+        except RateLimitError:
+            raise AIRateLimitError(
+                "Groq rate limit exceeded."
+            )
+        except APITimeoutError:
+            raise AITimeoutError(
+                "Groq request timed out."
+            )
+        except APIConnectionError:
+            raise AIUnavailableError(
+                "Unable to connect to Groq."
+            )
 
-            markdown = response.choices[0].message.content
+        markdown = response.choices[0].message.content
 
-            if not markdown:
-                raise RuntimeError("Groq returned an empty response.")
+        if not markdown or not markdown.strip():
+            raise AIEmptyResponseError(
+                "Groq returned an empty response."
+            )
 
-            markdown = markdown.strip()
+        markdown = markdown.strip()
 
-            noise = [
-                "Sure!",
-                "Certainly!",
-                "Here is",
-                "Here's",
-                "Of course!",
-            ]
+        noise = [
+            "Sure!",
+            "Certainly!",
+            "Here is",
+            "Here's",
+            "Of course!",
+        ]
 
-            for prefix in noise:
-                if markdown.startswith(prefix):
-                    first_heading = markdown.find("# ")
-                    if first_heading != -1:
-                        markdown = markdown[first_heading:]
+        for prefix in noise:
+            if markdown.startswith(prefix):
+                first_heading = markdown.find("# ")
+                if first_heading != -1:
+                    markdown = markdown[first_heading:]
 
-            return markdown
-
-        except Exception as e:
-            raise RuntimeError(f"Groq generation failed: {e}")
+        return markdown

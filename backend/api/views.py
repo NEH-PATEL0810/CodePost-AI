@@ -8,6 +8,7 @@ from .serializers import(
 
 from .services.generation_service import GenerationService
 from .services.ai.context import ProblemData
+from .services.ai.exceptions import AIServiceError
 
 @api_view(["GET"])
 def health(request):
@@ -45,10 +46,27 @@ def generate(request):
                 }
             }
         )
+    except AIServiceError as e:
+        return Response(
+            {
+                "success": False,
+                "message": str(e),
+            },
+            status=503,
+        )
+    except (RuntimeError, ValueError) as e:
+        return Response(
+            {
+                "success": False,
+                "message": str(e),
+            },
+            status=400,
+        )
     except Exception as e:
         return Response(
             {
-                "error": str(e)
+                "success": False,
+                "message": str(e),
             },
             status=500,
         )

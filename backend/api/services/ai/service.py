@@ -5,6 +5,7 @@ from .groq import GroqProvider
 from .validator import ResponseValidator
 from .composer import MarkdownComposer
 from .code_validator import CodeValidator
+from .retry import RetryManager
 
 class GenerationService:
     def __init__(self):
@@ -13,6 +14,7 @@ class GenerationService:
         self.validator = ResponseValidator()
         self.composer = MarkdownComposer()
         self.code_validator = CodeValidator()
+        self.retry = RetryManager()
     
     def generate(self, problem):
         if isinstance(problem, dict):
@@ -23,7 +25,9 @@ class GenerationService:
             raise RuntimeError(message)
 
         prompt = self.builder.build(problem)
-        markdown = self.provider.generate(prompt)
+        markdown = self.retry.run(
+            lambda: self.provider.generate(prompt)
+        )
 
         print("=" * 70)
         print("Groq Markdown")
