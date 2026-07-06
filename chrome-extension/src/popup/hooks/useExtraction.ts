@@ -41,8 +41,9 @@ export function useExtraction(
                         func: () => {
                             try {
                                 let code = "";
-                                if (window.monaco && window.monaco.editor) {
-                                    const models = window.monaco.editor.getModels();
+                                const win = window as any;
+                                if (win.monaco && win.monaco.editor) {
+                                    const models = win.monaco.editor.getModels();
                                     if (models && models.length > 0) {
                                         let mainModel = models[0];
                                         for (let m of models) {
@@ -55,13 +56,13 @@ export function useExtraction(
                                     }
                                 }
                                 if (!code) {
-                                    const cmContent = document.querySelector('.cm-content');
+                                    const cmContent = document.querySelector('.cm-content') as any;
                                     if (cmContent && cmContent.cmView && cmContent.cmView.view) {
                                         code = cmContent.cmView.view.state.doc.toString();
                                     }
                                 }
                                 if (!code) {
-                                    const editorEl = document.querySelector('.monaco-editor');
+                                    const editorEl = document.querySelector('.monaco-editor') as any;
                                     if (editorEl && editorEl.env && editorEl.env.editor) {
                                         code = editorEl.env.editor.getValue();
                                     }

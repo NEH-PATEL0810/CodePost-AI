@@ -83,9 +83,9 @@ class ResponseValidator:
         errors = []
 
         for section in self.REQUIRED_HEADERS:
-
-            if section not in markdown:
-
+            header_name = section.lstrip("#").strip()
+            pattern = rf"^\s*#+\s*{re.escape(header_name)}(?:\b|:|\s|$)"
+            if not re.search(pattern, markdown, re.MULTILINE | re.IGNORECASE):
                 errors.append(
                     f"Missing section: {section}"
                 )

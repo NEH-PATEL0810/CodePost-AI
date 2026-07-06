@@ -19,9 +19,11 @@ class GroqProvider(AIProvider):
         AIConfig.validate()
 
         self.client = Groq(
-            api_key=AIConfig.API_KEY
+            api_key=AIConfig.API_KEY,
+            timeout=20.0
         )
         self.model = AIConfig.MODEL
+        self.max_tokens = AIConfig.MAX_TOKENS
 
     def generate(self, prompt: str) -> str:
         """
@@ -31,7 +33,7 @@ class GroqProvider(AIProvider):
             response = self.client.chat.completions.create(
                 model=self.model,
                 temperature=0.2,
-                max_tokens=900,
+                max_tokens=self.max_tokens,
                 top_p=0.9,
                 messages=[
                     {

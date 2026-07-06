@@ -42,6 +42,11 @@ export function PopupRouter({state, genState, generate}: Props){
             lower.includes("unavailable")
         ) {
             displayError = "Unable to contact AI provider.\n\nPlease try again.";
+        } else if (
+            lower.includes("receiving end") ||
+            lower.includes("invalidated")
+        ) {
+            displayError = "Extension reloaded.\n\nPlease refresh your LeetCode tab to reconnect.";
         }
         
         return <ErrorCard message={displayError} />;
@@ -51,8 +56,18 @@ export function PopupRouter({state, genState, generate}: Props){
         case "unsupported":
             return <UnsupportedCard />;
         
-        case "error":
-            return <ErrorCard message={state.error || "An error occurred while loading the problem."} />;
+        case "error": {
+            let errorMsg = state.error || "An error occurred while loading the problem.";
+            const lowerErr = errorMsg.toLowerCase();
+            if (
+                lowerErr.includes("receiving end") ||
+                lowerErr.includes("invalidated") ||
+                lowerErr.includes("connection")
+            ) {
+                errorMsg = "Extension reloaded.\n\nPlease refresh your LeetCode tab to reconnect.";
+            }
+            return <ErrorCard message={errorMsg} />;
+        }
         
         case "ready":
             return state.problem ? (

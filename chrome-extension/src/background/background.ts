@@ -12,8 +12,21 @@
 
 import { MessageType } from "@/types/messages";
 
+// Set storage access level so that content scripts can access chrome.storage.session
+if (typeof chrome !== "undefined" && chrome.storage && chrome.storage.session && chrome.storage.session.setAccessLevel) {
+  chrome.storage.session.setAccessLevel({
+    accessLevel: "TRUSTED_AND_UNTRUSTED_CONTEXTS"
+  }).catch((err) => console.error("[Background] Error setting session access level:", err));
+}
+
 // Listen for extension installation or update
 chrome.runtime.onInstalled.addListener((details) => {
+  if (typeof chrome !== "undefined" && chrome.storage && chrome.storage.session && chrome.storage.session.setAccessLevel) {
+    chrome.storage.session.setAccessLevel({
+      accessLevel: "TRUSTED_AND_UNTRUSTED_CONTEXTS"
+    }).catch((err) => console.error("[Background] Error setting session access level in onInstalled:", err));
+  }
+
   if (details.reason === "install") {
     console.log("[CodePost AI] Extension installed successfully.");
   } else if (details.reason === "update") {

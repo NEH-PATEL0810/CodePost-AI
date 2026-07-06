@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { RegenerateButton } from "./RegenerateButton";
+import { PublishButton } from "./PublishButton";
 
 export function PreviewToolbar() {
 
@@ -9,11 +9,7 @@ export function PreviewToolbar() {
 
             <RegenerateButton />
 
-            <Button>
-
-                Publish
-
-            </Button>
+            <PublishButton />
 
         </div>
 
