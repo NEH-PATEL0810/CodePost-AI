@@ -1,56 +1,19 @@
 import { RuntimeRouter } from "./router";
 import { RuntimeMessageType } from "./messages";
 import type { RuntimeMessage } from "./messages";
-import { MonacoDetector } from "./detector";
-import { MonacoDiscovery } from "./modelDiscovery";
-import { MonacoSelector } from "./modelSelector";
-import { MarkdownWriter } from "./writer";
-import { RuntimeGuard } from "./guard";
+import { RuntimeMessenger } from "./messenger";
 
-const detector = new MonacoDetector();
-const discovery = new MonacoDiscovery();
-const selector = new MonacoSelector();
-const writer = new MarkdownWriter();
-const guard = new RuntimeGuard();
+import { pingHandler } from "./handlers/pingHandler";
+import { monacoHandler } from "./handlers/monacoHandler";
+import { discoveryHandler } from "./handlers/discoveryHandler";
+import { injectionHandler } from "./handlers/injectionHandler";
+
 const router = new RuntimeRouter();
 
 console.log("[Runtime] Listening...");
 
-async function injectMarkdown(markdown: string): Promise<boolean> {
-    console.log("[Runtime] Injection Requested");
-    console.log("[Runtime] Checking URL");
-
-    if (!guard.isSolutionPage()) {
-        console.log("[Runtime] Injection Blocked");
-        return false;
-    }
-
-    console.log("[Runtime] Solution Page Verified");
-    console.log("[Runtime] Discovering Models");
-
-    await discovery.discover();
-
-    const rawModels = (window as any).monaco?.editor?.getModels() || [];
-
-    console.log("[Runtime] Selecting Markdown Model");
-    const model = selector.selectMarkdownModel(rawModels);
-
-    if (!model) {
-        console.log("[Runtime] No Markdown Model");
-        return false;
-    }
-
-    console.log("[Runtime] Writing Markdown");
-    const result = writer.write(model, markdown);
-    console.log("[Runtime] Done");
-    return result;
-}
-
 // Send ready message
-window.postMessage({
-    source: "CODEPOST",
-    type: RuntimeMessageType.READY
-}, "*");
+RuntimeMessenger.sendReady();
 
 window.addEventListener("message", async (event) => {
     if (event.source !== window)
@@ -76,55 +39,23 @@ window.addEventListener("message", async (event) => {
             break;
 
         case RuntimeMessageType.PING: {
-            console.log("[Runtime] PING Received");
-            window.postMessage({
-                source: "CODEPOST",
-                type: RuntimeMessageType.PONG
-            }, "*");
+            await pingHandler();
             break;
         }
 
         case RuntimeMessageType.CHECK_MONACO: {
-            console.log("[Runtime] Checking Monaco...");
-            window.postMessage({
-                source: "CODEPOST",
-                type: RuntimeMessageType.MONACO_STATUS,
-                available: detector.isAvailable()
-            }, "*");
+            await monacoHandler();
             break;
         }
 
         case RuntimeMessageType.DISCOVER_MODELS: {
-            console.log("[Runtime] Discovering Monaco Models...");
-            const models = await discovery.discover();
-            const rawModels = (window as any).monaco?.editor?.getModels() || [];
-            const selectedModel = selector.selectMarkdownModel(rawModels);
-
-            if (!selectedModel) {
-                console.log("[Runtime] No Markdown Model.");
-                return;
-            }
-
-            console.log("[Runtime] Markdown Model Selected");
-            console.table([{
-                language: selectedModel.getLanguageId(),
-                uri: selectedModel.uri.toString(),
-                lineCount: selectedModel.getLineCount(),
-                preview: selectedModel.getValue().substring(0, 80)
-            }]);
-
-            window.postMessage({
-                source: "CODEPOST",
-                type: RuntimeMessageType.MODELS_FOUND,
-                models
-            }, "*");
+            await discoveryHandler();
             break;
         }
 
         case RuntimeMessageType.INJECT_MARKDOWN: {
-            console.log("[Runtime] Injection Request Received");
-            const markdown = event.data.markdown;
-            const success = await injectMarkdown(markdown);
+            const markdown = message.markdown || "";
+            const success = await injectionHandler(markdown);
             console.log("[Runtime] Injection Status:", success);
             break;
         }
