@@ -47,26 +47,48 @@ async function injectMarkdown(markdown: string): Promise<boolean> {
 }
 
 // Send ready message
-window.postMessage({ type: "READY" }, "*");
+window.postMessage({
+    source: "CODEPOST",
+    type: RuntimeMessageType.READY
+}, "*");
 
 window.addEventListener("message", async (event) => {
     if (event.source !== window)
         return;
 
-    const action = router.route(event.data as RuntimeMessage);
+    const message = event.data;
+    if (
+        !message ||
+        message.source !== "CODEPOST"
+    ) {
+        return;
+    }
+
+    const action = router.route(message as RuntimeMessage);
     if (!action) return;
 
     switch (action) {
+        case RuntimeMessageType.READY:
+        case RuntimeMessageType.PONG:
+        case RuntimeMessageType.MONACO_STATUS:
+        case RuntimeMessageType.MODELS_FOUND:
+            // Infrastructure messages, handled by the content script side
+            break;
+
         case RuntimeMessageType.PING: {
             console.log("[Runtime] PING Received");
-            window.postMessage({ type: "PONG" }, "*");
+            window.postMessage({
+                source: "CODEPOST",
+                type: RuntimeMessageType.PONG
+            }, "*");
             break;
         }
 
         case RuntimeMessageType.CHECK_MONACO: {
             console.log("[Runtime] Checking Monaco...");
             window.postMessage({
-                type: "MONACO_STATUS",
+                source: "CODEPOST",
+                type: RuntimeMessageType.MONACO_STATUS,
                 available: detector.isAvailable()
             }, "*");
             break;
@@ -92,7 +114,8 @@ window.addEventListener("message", async (event) => {
             }]);
 
             window.postMessage({
-                type: "MODELS_FOUND",
+                source: "CODEPOST",
+                type: RuntimeMessageType.MODELS_FOUND,
                 models
             }, "*");
             break;
