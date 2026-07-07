@@ -60,6 +60,7 @@ window.addEventListener("message", async (event) => {
             const markdown = message.markdown || "";
             const success = await injectionHandler(markdown);
             console.log("[Runtime] Injection Status:", success);
+            RuntimeMessenger.sendInjectionStatus(success);
             break;
         }
 

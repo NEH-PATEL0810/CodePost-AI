@@ -39,4 +39,12 @@ export class RuntimeMessenger {
             data
         }, "*");
     }
+
+    static sendInjectionStatus(success: boolean): void {
+        window.postMessage({
+            source: "CODEPOST",
+            type: RuntimeMessageType.INJECTION_STATUS,
+            success
+        }, "*");
+    }
 }
