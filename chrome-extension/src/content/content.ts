@@ -1,7 +1,7 @@
 import { installExtensionContextGuard } from "@/utils/extensionContext";
 installExtensionContextGuard();
 
-import { RuntimeMessenger } from "./communication/messenger";
+import { RuntimeMessenger } from "./messaging/messenger";
 import { NavigationBridge } from "./bridge/manager";
 import { extractProblem } from "./extractor";
 import { MessageType } from "@/types/messages";
@@ -44,6 +44,10 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
             (async () => {
                 try {
                     await manager.openPostEditor();
+                    
+                    // Trigger the event-driven injection pipeline
+                    messenger.injectMarkdown(request.markdown);
+
                     sendResponse({
                         success: true,
                     });

@@ -1,4 +1,4 @@
-import pageBridgeUrl from "../../page/page-bridge.ts?script";
+import pageBridgeUrl from "../runtime/runtime.ts?script";
 
 export class PageInjector {
     inject() {

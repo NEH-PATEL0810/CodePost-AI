@@ -1,12 +1,1 @@
-export const PAGE_MESSAGES = {
-    PING: "PING",
-    PONG: "PONG",
-    SET_MARKDOWN: "SET_MARKDOWN",
-    CHECK_MONACO: "CHECK_MONACO",
-    MONACO_STATUS: "MONACO_STATUS",
-    DISCOVER_MODELS: "DISCOVER_MODELS",
-    MODELS_FOUND: "MODELS_FOUND",
-    READY: "READY",
-    SUCCESS: "SUCCESS",
-    ERROR: "ERROR"
-} as const;
+// Deprecated: Relocated to src/content/runtime/messages.ts

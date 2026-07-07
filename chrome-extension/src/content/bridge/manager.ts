@@ -1,5 +1,5 @@
 import { RuntimeDetector } from "./detector";
-import { RuntimeMessenger } from "../communication/messenger";
+import { RuntimeMessenger } from "../messaging/messenger";
 import { PageInjector } from "../injector/pageInjector";
 
 export class NavigationBridge {
@@ -28,7 +28,7 @@ export class NavigationBridge {
             available
         );
 
-        this.messenger.discoverModels();
+        this.messenger.startHeartbeat();
 
     }
 

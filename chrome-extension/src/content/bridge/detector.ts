@@ -1,13 +1,9 @@
-import { PAGE_MESSAGES } from "@/page/messages";
+import { PAGE_MESSAGES, RuntimeMessageType } from "../runtime/messages";
 
 export class RuntimeDetector {
-
     checkMonaco(): Promise<boolean> {
-
         return new Promise(resolve => {
-
             const listener = (event: MessageEvent) => {
-
                 if (event.source !== window)
                     return;
 
@@ -20,7 +16,6 @@ export class RuntimeDetector {
                 );
 
                 resolve(event.data.available);
-
             };
 
             window.addEventListener(
@@ -31,13 +26,9 @@ export class RuntimeDetector {
             console.log("[Content] Sending CHECK_MONACO");
 
             window.postMessage({
-
-                type: PAGE_MESSAGES.CHECK_MONACO
-
-            });
-
+                source: "CODEPOST",
+                type: RuntimeMessageType.CHECK_MONACO
+            }, "*");
         });
-
     }
-
 }
