@@ -38,4 +38,10 @@ export default defineManifest({
     "https://leetcode.com/*",
     ...(isDev ? ["http://localhost:8000/*"] : []),
   ],
+  web_accessible_resources: [
+    {
+      resources: ["define-chrome.js", "assets/*"],
+      matches: ["https://leetcode.com/*"],
+    },
+  ],
 });

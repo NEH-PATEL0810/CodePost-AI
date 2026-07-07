@@ -1,29 +1,7 @@
-export class EditorVerifier {
-
-    verify(
-
-        editor: HTMLElement,
-
-        markdown: string,
-
-    ) {
-
-        const isVerified = (
-
-            editor.innerText.trim()
-
-            ===
-
-            markdown.trim()
-
-        );
-
-        if (isVerified) {
-            console.log("Verified.");
-        }
-
-        return isVerified;
-
+export class MonacoVerifier {
+    verify(): boolean {
+        const textarea = document.querySelector("textarea");
+        if (!textarea) return false;
+        return textarea.value.length > 50;
     }
-
 }

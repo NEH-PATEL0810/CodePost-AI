@@ -1,0 +1,1 @@
+// Old editor types - deprecated

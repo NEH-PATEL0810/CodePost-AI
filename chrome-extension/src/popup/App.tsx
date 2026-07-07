@@ -17,7 +17,7 @@ import { useGeneration } from "./hooks/useGeneration";
 //   );
 // }
 
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 export default function Popup() {
   // const { loading, status } = usePageStatus();

@@ -1,7 +1,5 @@
-export enum PublishMessage {
+export const PublishMessage = {
+    PUBLISH_MARKDOWN: "PUBLISH_MARKDOWN",
+} as const;
 
-    PUBLISH_MARKDOWN =
-
-        "PUBLISH_MARKDOWN",
-
-}
+export type PublishMessage = typeof PublishMessage[keyof typeof PublishMessage];

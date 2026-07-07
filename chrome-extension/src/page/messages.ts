@@ -1,0 +1,10 @@
+export const PAGE_MESSAGES = {
+    PING: "PING",
+    PONG: "PONG",
+    SET_MARKDOWN: "SET_MARKDOWN",
+    CHECK_MONACO: "CHECK_MONACO",
+    MONACO_STATUS: "MONACO_STATUS",
+    READY: "READY",
+    SUCCESS: "SUCCESS",
+    ERROR: "ERROR"
+} as const;

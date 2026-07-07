@@ -14,7 +14,7 @@ function getTextContent(children: React.ReactNode): string {
         if (typeof child === "string" || typeof child === "number") {
             text += String(child);
         } else if (React.isValidElement(child)) {
-            text += getTextContent(child.props.children);
+            text += getTextContent((child as React.ReactElement<any>).props.children);
         }
     });
     return text;

@@ -7,6 +7,10 @@ export async function publishMarkdown(
 
     markdown: string,
 
+    title: string,
+
+    problemUrl: string,
+
 ) {
 
     await chrome.storage.session.set({
@@ -14,6 +18,14 @@ export async function publishMarkdown(
         [SESSION_KEYS.PENDING_MARKDOWN]:
 
             markdown,
+
+        [SESSION_KEYS.PENDING_TITLE]:
+
+            title,
+
+        [SESSION_KEYS.PENDING_PROBLEM]:
+
+            problemUrl,
 
     });
 

@@ -34,6 +34,10 @@ export function usePublish() {
 
             document.currentMarkdown,
 
+            document.problem.title,
+
+            document.problem.url,
+
         );
 
     }
