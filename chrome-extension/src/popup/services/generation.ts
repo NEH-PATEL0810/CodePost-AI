@@ -31,7 +31,7 @@ function composeMarkdown(documentation: string, problem: ProblemData): string {
         problem.code.trim() +
         "\n\`\`\`\n\n" +
         "---\n" +
-        "_*Generated with [CodePost AI](https://github.com) 🚀_"
+        "_*Generated with [CodePost AI](https://github.com/NEH-PATEL0810/CodePost-AI.git) 🚀_"
     );
 }
 

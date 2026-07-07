@@ -90,10 +90,10 @@ export class ModelManager {
         throw new Error("All models failed.");
     }
 
-    private getFriendlyName(model: string): string {
-        if (model.includes("kimi")) return "Kimi K2";
-        if (model.includes("qwen")) return "Qwen3";
-        if (model.includes("gpt")) return "GPT-OSS";
-        return model;
-    }
+    // private getFriendlyName(model: string): string {
+    //     if (model.includes("kimi")) return "Kimi K2";
+    //     if (model.includes("qwen")) return "Qwen3";
+    //     if (model.includes("gpt")) return "GPT-OSS";
+    //     return model;
+    // }
 }

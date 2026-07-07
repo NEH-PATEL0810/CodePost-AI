@@ -5,8 +5,8 @@ export class GroqProvider implements AIProvider {
     private baseUrl: string;
 
     constructor(
-        apiKey: string = "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",
-        baseUrl: string = "https://openrouter.ai/api/v1"
+        apiKey: string = import.meta.env.VITE_OPENROUTER_API_KEY || "",
+        baseUrl: string = import.meta.env.VITE_OPENROUTER_BASE_URL || "https://openrouter.ai/api/v1"
     ) {
         this.apiKey = apiKey;
         this.baseUrl = baseUrl;

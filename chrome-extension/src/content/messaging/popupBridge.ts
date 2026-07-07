@@ -1,7 +1,7 @@
 import { PopupMessageType } from "@/shared/popupMessages";
 import { RuntimeMessageType } from "@/shared/messageTypes";
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     if (!message || message.source !== "CODEPOST") {
         return;
     }
