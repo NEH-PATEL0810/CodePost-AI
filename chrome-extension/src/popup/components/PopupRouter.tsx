@@ -16,7 +16,7 @@ interface Props {
 
 export function PopupRouter({state, genState, generate}: Props){
     if (genState.status === "generating") {
-        return <GeneratingCard />;
+        return <GeneratingCard message={genState.message} />;
     }
     
     if (genState.status === "completed") {

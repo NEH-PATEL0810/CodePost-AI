@@ -4,6 +4,7 @@ export interface GenerationState{
     status:GenerationStatus;
     result:GeneratedSolution | null;
     error:string | null;
+    message?: string;
 }
 
 export interface GeneratedSolution {

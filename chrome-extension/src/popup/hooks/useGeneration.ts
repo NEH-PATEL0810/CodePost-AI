@@ -26,7 +26,12 @@ export function useGeneration(){
         }));
 
         try{
-            const result = await generateDocumentation(problem);
+            const result = await generateDocumentation(problem, (msg) => {
+                setState(prev => ({
+                    ...prev,
+                    message: msg
+                }));
+            });
             
             setDocument({
                 problem,
