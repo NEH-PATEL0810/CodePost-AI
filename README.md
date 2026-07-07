@@ -6,11 +6,9 @@ An intelligent developer tool and Chrome Extension designed to automate code ext
 
 ## Demo Video
 
-Place your demonstration video inside this section. You can embed a video file directly using the HTML `<video>` element below:
 
 ```html
-<video src="https://youtu.be/2lAeAshBQu4" width="100%" controls poster="assets/video_poster.png">
-  Your browser does not support the video tag.
+<video src="https://youtu.be/2lAeAshBQu4" width="100%">
 </video>
 ```
 
