@@ -1,4 +1,4 @@
-# CodePost AI
+# CodePost AI 🚀🤖
 
 An intelligent developer tool and Chrome Extension designed to automate code extraction and solution documentation for coding platforms like LeetCode. With CodePost AI, developers can instantly parse problem statements, retrieve their active solutions, and generate structured, markdown explanations, complexity analyses, and walkthroughs using advanced Large Language Models.
 
@@ -9,16 +9,11 @@ An intelligent developer tool and Chrome Extension designed to automate code ext
 Place your demonstration video inside this section. You can embed a video file directly using the HTML `<video>` element below:
 
 ```html
-<video src="C:\Users\Admin\Downloads\CodePost-AI.mp4" width="100%" controls poster="assets/video_poster.png">
+<video src="https://youtu.be/2lAeAshBQu4" width="100%" controls poster="assets/video_poster.png">
   Your browser does not support the video tag.
 </video>
 ```
 
-Alternatively, you can link a GIF or insert an image linking to an external video player:
-
-[![CodePost AI Demo](https://via.placeholder.com/800x450.png?text=Click+to+Play+CodePost+AI+Demo)]("C:\Users\Admin\Downloads\CodePost-AI.mp4")
-
----
 
 ## Key Features
 
