@@ -1,9 +1,12 @@
 import { RuntimeDetector } from "./detector";
+import { RuntimeMessenger } from "../communication/messenger";
 import { PageInjector } from "../injector/pageInjector";
 
 export class NavigationBridge {
 
     detector = new RuntimeDetector();
+
+    messenger = new RuntimeMessenger();
 
     injector = new PageInjector();
 
@@ -25,6 +28,9 @@ export class NavigationBridge {
             available
         );
 
+        this.messenger.discoverModels();
+
     }
 
 }
+

@@ -1,7 +1,6 @@
 import { installExtensionContextGuard } from "@/utils/extensionContext";
 installExtensionContextGuard();
 
-import { PageInjector } from "./injector/pageInjector";
 import { RuntimeMessenger } from "./communication/messenger";
 import { NavigationBridge } from "./bridge/manager";
 import { extractProblem } from "./extractor";
@@ -11,11 +10,7 @@ import { LOGS } from "@/constants/messages";
 import { PublishMessage } from "@/shared/messages/publish";
 import { ShareManager } from "./share";
 
-// 1. Initialize page-bridge injection
-const injector = new PageInjector();
-injector.inject();
-
-// 2. Initialize ping/pong communication
+// 1. Initialize ping/pong communication
 const messenger = new RuntimeMessenger();
 messenger.initialize();
 
@@ -23,7 +18,7 @@ setTimeout(() => {
     messenger.ping();
 }, 1500); // 1.5s delay to guarantee the script is loaded first
 
-// 3. Initialize Monaco detection bridge
+// 2. Initialize Monaco detection bridge (also handles page-bridge injection)
 const bridge = new NavigationBridge();
 bridge.initialize();
 

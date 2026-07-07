@@ -1,11 +1,15 @@
 import { PAGE_MESSAGES } from "./messages";
 import { MonacoDetector } from "./monaco/detector";
+import { MonacoDiscovery } from "./monaco/discovery";
 
 const detector = new MonacoDetector();
 
+const discovery =
+    new MonacoDiscovery();
+
 console.log("[Runtime] Listening...");
 
-window.addEventListener("message", event => {
+window.addEventListener("message", async event => {
 
     if (event.source !== window)
         return;
@@ -42,4 +46,26 @@ window.addEventListener("message", event => {
 
     }
 
+    if (type === PAGE_MESSAGES.DISCOVER_MODELS) {
+
+        console.log(
+            "[Runtime] Discovering Monaco Models..."
+        );
+
+        const models =
+            await discovery.discover();
+
+        window.postMessage({
+
+            type: PAGE_MESSAGES.MODELS_FOUND,
+
+            models
+
+        });
+
+        return;
+
+    }
+
 });
+
