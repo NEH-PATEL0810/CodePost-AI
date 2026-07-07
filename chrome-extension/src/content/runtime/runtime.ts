@@ -7,8 +7,10 @@ import { pingHandler } from "./handlers/pingHandler";
 import { monacoHandler } from "./handlers/monacoHandler";
 import { discoveryHandler } from "./handlers/discoveryHandler";
 import { injectionHandler } from "./handlers/injectionHandler";
+import { RequestHandler } from "./handlers/requestHandler";
 
 const router = new RuntimeRouter();
+const requestHandler = new RequestHandler();
 
 console.log("[Runtime] Listening...");
 
@@ -35,6 +37,7 @@ window.addEventListener("message", async (event) => {
         case RuntimeMessageType.PONG:
         case RuntimeMessageType.MONACO_STATUS:
         case RuntimeMessageType.MODELS_FOUND:
+        case RuntimeMessageType.RESPONSE:
             // Infrastructure messages, handled by the content script side
             break;
 
@@ -57,6 +60,12 @@ window.addEventListener("message", async (event) => {
             const markdown = message.markdown || "";
             const success = await injectionHandler(markdown);
             console.log("[Runtime] Injection Status:", success);
+            break;
+        }
+
+        case RuntimeMessageType.REQUEST: {
+            const data = await requestHandler.handle();
+            RuntimeMessenger.sendResponse(data, message.requestId);
             break;
         }
     }

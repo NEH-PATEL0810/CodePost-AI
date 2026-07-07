@@ -1,13 +1,5 @@
-export enum RuntimeMessageType {
-    READY = "READY",
-    PING = "PING",
-    PONG = "PONG",
-    CHECK_MONACO = "CHECK_MONACO",
-    MONACO_STATUS = "MONACO_STATUS",
-    DISCOVER_MODELS = "DISCOVER_MODELS",
-    MODELS_FOUND = "MODELS_FOUND",
-    INJECT_MARKDOWN = "INJECT_MARKDOWN"
-}
+import { RuntimeMessageType } from "@/shared/messageTypes";
+export { RuntimeMessageType };
 
 export interface RuntimeMessage {
     source: "CODEPOST";

@@ -42,6 +42,12 @@ export class RuntimeRouter {
             case RuntimeMessageType.INJECT_MARKDOWN:
                 return RuntimeMessageType.INJECT_MARKDOWN;
 
+            case RuntimeMessageType.REQUEST:
+                return RuntimeMessageType.REQUEST;
+
+            case RuntimeMessageType.RESPONSE:
+                return RuntimeMessageType.RESPONSE;
+
             default:
                 console.warn(
                     "[Router] Unknown Message"

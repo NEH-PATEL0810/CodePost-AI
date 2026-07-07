@@ -2,6 +2,7 @@ import { installExtensionContextGuard } from "@/utils/extensionContext";
 installExtensionContextGuard();
 
 import { RuntimeMessenger } from "./messaging/messenger";
+import "./messaging/popupBridge";
 import { NavigationBridge } from "./bridge/manager";
 import { extractProblem } from "./extractor";
 import { MessageType } from "@/types/messages";

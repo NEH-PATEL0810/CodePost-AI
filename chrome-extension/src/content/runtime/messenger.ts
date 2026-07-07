@@ -1,4 +1,4 @@
-import { PAGE_MESSAGES } from "./messages";
+import { PAGE_MESSAGES, RuntimeMessageType } from "./messages";
 
 export class RuntimeMessenger {
     static sendReady(): void {
@@ -28,6 +28,15 @@ export class RuntimeMessenger {
             source: "CODEPOST",
             type: PAGE_MESSAGES.MODELS_FOUND,
             models
+        }, "*");
+    }
+
+    static sendResponse(data: any, requestId?: string): void {
+        window.postMessage({
+            source: "CODEPOST",
+            type: RuntimeMessageType.RESPONSE,
+            requestId,
+            data
         }, "*");
     }
 }
