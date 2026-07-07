@@ -11,7 +11,7 @@ if exist venv (
 )
 
 echo [2/4] Creating new virtual environment...
-"C:\Users\Admin\AppData\Local\Programs\Python\Python312\python.exe" -m venv venv
+python -m venv venv
 
 if errorlevel 1 (
     echo Error: Failed to create virtual environment!

@@ -1,5 +1,5 @@
 @echo off
-cd /d "e:\LEARNING_COURSES\CodePost-AI\chrome-extension\src"
+cd /d "%~dp0src"
 
 echo === Removing accidentally generated .js files ===
 del /s /q *.js
