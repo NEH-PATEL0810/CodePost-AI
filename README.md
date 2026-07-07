@@ -6,11 +6,7 @@ An intelligent developer tool and Chrome Extension designed to automate code ext
 
 ## Demo Video
 
-
-```html
-<video src="https://youtu.be/2lAeAshBQu4" width="100%">
-</video>
-```
+[![CodePost AI Demo Video](https://img.youtube.com/vi/2lAeAshBQu4/maxresdefault.jpg)](https://youtu.be/2lAeAshBQu4)
 
 
 ## Key Features
