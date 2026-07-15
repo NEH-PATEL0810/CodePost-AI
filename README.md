@@ -1,6 +1,6 @@
 # CodePost AI 🚀🤖
 
-An intelligent developer tool and Chrome Extension designed to automate code extraction and solution documentation for coding platforms like LeetCode. With CodePost AI, developers can instantly parse problem statements, retrieve their active solutions, and generate structured, markdown explanations, complexity analyses, and walkthroughs using advanced Large Language Models.
+An intelligent developer tool and Chrome Extension designed to automate code extraction and solution documentation for coding platforms like LeetCode. With CodePost AI, Coders can instantly parse problem statements, retrieve their active solutions, and generate structured, markdown explanations, complexity analyses, and walkthroughs using advanced Large Language Models.
 
 ---
 
